@@ -1,0 +1,1 @@
+Mininet network started with ONOS controller.
