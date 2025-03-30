@@ -115,13 +115,13 @@ def test_model(test_data_path):
     test_df = pd.read_csv(test_data_path)
 
     # Load trained encoder
-    encoder = joblib.load("/content/onehot_encoder.pkl")
+    encoder = joblib.load("./onehot_encoder.pkl")
 
     # Preprocess test data
     X_test, _ = preprocess(test_df, encoder=encoder, fit_encoder=False)
 
     # Ensure test data has same columns as training
-    trained_columns = joblib.load("/content/trained_columns.pkl")  # Load saved column order
+    trained_columns = joblib.load("./trained_columns.pkl")  # Load saved column order
     missing_cols = set(trained_columns) - set(X_test.columns)
     for col in missing_cols:
         X_test[col] = 0  # Add missing columns with default value
@@ -129,7 +129,7 @@ def test_model(test_data_path):
     X_test = X_test[trained_columns]  # Reorder columns
 
     # Load trained model
-    model = tf.keras.models.load_model("/content/dnn_model.h5")
+    model = tf.keras.models.load_model("./dnn_model.h5")
 
     # Predict
     predictions = model.predict(X_test.values)
@@ -147,8 +147,8 @@ def test_model(test_data_path):
 # ===========================
 if __name__ == "__main__":
     # Change file paths as needed
-    train_file_path = "/content/UNSW_2018_IoT_Botnet_Final_10_best_Training.csv"
-    test_file_path = "/content/UNSW_2018_IoT_Botnet_Final_10_best_Testing.csv"
+    train_file_path = "./UNSW_2018_IoT_Botnet_Final_10_best_Training.csv"
+    test_file_path = "./UNSW_2018_IoT_Botnet_Final_10_best_Testing.csv"
 
     # Train the model
     train_model(train_file_path)
