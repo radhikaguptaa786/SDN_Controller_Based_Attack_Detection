@@ -8,10 +8,13 @@ import requests
 from ryu.app.simple_switch_13 import SimpleSwitch13
 from scapy.all import *
 import pandas as pd
+import sys
+import os
+
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../ml_model")))
 from extract_features import extract_features
 from ml_model_training_testing import test_model
-
-sys.path.append(os.path.abspath("ml_model"))
 class SDNFirewall(SimpleSwitch13):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
