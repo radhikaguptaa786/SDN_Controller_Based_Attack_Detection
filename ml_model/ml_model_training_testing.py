@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 import joblib
+import ipaddress
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
@@ -11,6 +12,21 @@ from sklearn.model_selection import train_test_split
 # ===========================
 # 🚀 DATA PREPROCESSING FUNCTION
 # ===========================
+def ip_to_int(ip_address):
+    """
+    Converts an IP address string to an integer.
+    """
+    try:
+        # Attempt to convert to IPv4Address
+        ip = ipaddress.ip_address(ip_address)
+        if isinstance(ip, ipaddress.IPv4Address):  # Check if it's IPv4
+            return int(ip)  # Convert to integer for IPv4
+        else:
+            return 0  # Or handle IPv6 differently (e.g., return 0)
+    except ValueError:
+        # Handle cases where the input is not a valid IP address
+        # For example, you could return 0 or raise a more specific error
+        return 0  
 def preprocess(df, encoder=None, fit_encoder=False):
     """
     Preprocess dataset: One-Hot Encoding for categorical features, Z-score normalization.
